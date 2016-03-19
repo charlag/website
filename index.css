@@ -1,0 +1,39 @@
+body {
+    background-color: #444;
+    color: #CCC;
+    font-family: Arial;
+}
+
+ul {
+    list-style-type: none;
+}
+
+ul li {
+    display: block;
+    padding-bottom: 5px;
+}
+
+a {
+    text-decoration: none;
+    color: #3498db;
+}
+
+.header {
+    text-align: center;
+}
+
+.main-container {
+    margin: 40px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.photo {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    display: block;
+    margin: 0 auto;
+    border: 4px solid #FFF;
+    margin-bottom: 15px;
+}
