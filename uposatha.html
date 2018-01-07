@@ -3,12 +3,108 @@
     <head>
         <title></title>
         <meta charset="utf-8" />
+        <style>
+         html {
+             height: 100%;
+             box-sizing: border-box;
+         }
+
+         *,
+         *:before,
+         *:after {
+             box-sizing: inherit;
+         }
+
+         body {
+             background-color: white;
+             position: relative;
+             margin: 0;
+             padding-bottom: 70px;
+             min-height: 100%;
+         }
+
+         #msg {
+             font-weight: bold;
+             font-size: 28px;
+             text-align: center;
+             padding: 40px;
+         }
+
+         .phase-image {
+             max-width: 250px;
+         }
+
+         .phase-container {
+             width: 33.33%;
+             float: left;
+             text-align: center;
+             font-weight: bold;
+             font-size: 22px;
+         }
+
+         .descr {
+             width: 80%;
+             color: gray;
+             text-align: center;
+             margin: 20px auto;
+         }
+
+         #footer {
+             position: absolute;
+             right: 0;
+             bottom: 0;
+             left: 0;
+             padding: 1rem;
+             background-color: #efefef;
+             color: gray;
+             height: 70px;
+         }
+
+         .year {
+             margin-top: 10px;
+         }
+
+         a {
+             color: #666;
+             text-decoration: none;
+         }
+         a:hover {
+             text-decoration: underline;
+         }
+        </style>
     </head>
     <body>
         <div id="msg"></div>
+        <div>
+            <div class="phase-container">
+                <div>Yesterday:</div>
+                <img id="yesterday-img" src="moon_full.svg" class="phase-image" />
+            </div>
+            <div class="phase-container">
+                <div>Today:</div>
+                <img id="today-img" src="moon_full.svg" class="phase-image" />
+            </div>
+            <div class="phase-container">
+                <div>Tomorrow:</div>
+                <img id="tomorrow-img" src="moon_full.svg" class="phase-image" />
+            </div>
+            <div style="clear: both;" ></div>
+        </div>
+
+        <div class="descr">
+            Uposatha is a Buddhist day of observance. Here we consider new moon, full moon and two quarters as Uposatha days.
+        </div>
+        <footer id="footer">
+            <div>
+                Images are licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>. Code is under <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPLv3</a>
+            </div>
+            <div class="year">
+                charlag 2018
+            </div>
+        </footer>
     </body>
     <script>
-     // credits go to https://gist.github.com/endel/dfe6bb2fbe679781948c
+     // @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3-or-Later
      function getMoonPhase(date) {
          let year = date.getFullYear();
          let month = date.getMonth();
@@ -24,17 +120,11 @@
          ++month;
 
          c = 365.25 * year;
-
          e = 30.6 * month;
-
          jd = c + e + day - 694039.09; // jd is total days elapsed
-
-         jd /= 29.5305882; // divide by the moon cycle
-
+         jd /= 29.5305882; // divide by the moon cycle (29.53 days)
          b = parseInt(jd); // int(jd) -> b, take integer part of jd
-
          jd -= b; // subtract integer part to leave fractional part of original jd
-
          b = Math.round(jd * 8); // scale fraction from 0-8 and round
 
          if (b >= 8 ) {
@@ -56,16 +146,54 @@
          return phase == 0 || phase == 2 || phase == 4 || phase == 6
      }
 
-     function isUposathaDay(date) {
-         let yesterday = new Date(date.getTime());
-         yesterday.setDate(yesterday.getDate() - 1);
-
-         let moonPhase = getMoonPhase(date);
-         let oldPhase = getMoonPhase(yesterday);
-         return moonPhase != oldPhase && isUposathaPhase(moonPhase);
+     function isUposatha(yesterdayPhase, todayPhase) {
+         return todayPhase != yesterdayPhase && isUposathaDay(todayPhase);
      }
 
-     let message = isUposathaDay(new Date()) ? "Is Uposatha. Be mindful" : "Not Uposatha. Still be mindful";
+     function imageForPhase(phase) {
+         switch (phase) {
+             case 0:
+                 return "moon_new.svg";
+             case 1:
+                 return "moon_waxing_crescent.svg";
+             case 2:
+                 return "moon_first_quarter.svg";
+             case 3:
+                 return "moon_waxing_gibbous.svg";
+             case 4:
+                 return "moon_full.svg";
+             case 5:
+                 return "moon_waning_gibbous.svg";
+             case 6:
+                 return "moon_third_quarter.svg";
+             case 7:
+                 return "moon_waning_crescent.svg"
+             default:
+                 throw new Error("Unknown phase");
+         }
+     }
+
+     function dateShiftedByDays(date, days) {
+         const newDay = new Date(date.getTime());
+         newDay.setDate(newDay.getDate() + days);
+         return newDay;
+     }
+
+     function setPhaseImage(imageId, phase) {
+         document.getElementById(imageId).src = imageForPhase(phase);
+     }
+
+     const today = new Date();
+     const todayPhase = getMoonPhase(new Date());
+     const yesterdayPhase = getMoonPhase(dateShiftedByDays(today, -1));
+     const tomorrowPhase = getMoonPhase(dateShiftedByDays(today, 1));
+
+     setPhaseImage('today-img', todayPhase);
+     setPhaseImage('yesterday-img', yesterdayPhase);
+     setPhaseImage('tomorrow-img', tomorrowPhase)
+
+     const message = isUposatha(yesterdayPhase, todayPhase) ? "Is Uposatha. Be mindful" : "Not Uposatha. Still be mindful";
      document.getElementById('msg').innerHTML = message;
+     // @license-end
     </script>
 </html>
