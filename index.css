@@ -1,7 +1,8 @@
 body {
     background-color: #444;
     color: #CCC;
-    font-family: Arial;
+    font-family: Fira Sans Regular, sans-serif;
+    font-size: large;
 }
 
 ul {
