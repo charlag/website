@@ -1,7 +1,7 @@
 <!doctype html>
-<html>
+<html lang="en">
     <head>
-        <title></title>
+        <title>Uposatha checker</title>
         <meta charset="utf-8" />
         <style>
          html {
@@ -44,7 +44,7 @@
 
          .descr {
              width: 80%;
-             color: gray;
+             color: #666;
              text-align: center;
              margin: 20px auto;
          }
@@ -56,7 +56,7 @@
              left: 0;
              padding: 1rem;
              background-color: #efefef;
-             color: gray;
+             color: #666;
              height: 70px;
          }
 
@@ -73,7 +73,7 @@
          }
         </style>
     </head>
-    <body>
+    <body role="main">
         <div id="msg"></div>
         <div>
             <div class="phase-container">
@@ -173,14 +173,39 @@
          }
      }
 
+     function altForPhase(phase) {
+         switch (phase) {
+             case 0:
+                 return "New moon";
+             case 1:
+                 return "Waxing crescent moon";
+             case 2:
+                 return "First quarter moon";
+             case 3:
+                 return "Waxing glibbous moon";
+             case 4:
+                 return "Full moon";
+             case 5:
+                 return "Waning glibbous moon";
+             case 6:
+                 return "Third quarter moon";
+             case 7:
+                 return "Waning crescent moon";
+             default:
+                 throw new Error("Unknown phase");
+         }
+     }
+
      function dateShiftedByDays(date, days) {
          const newDay = new Date(date.getTime());
          newDay.setDate(newDay.getDate() + days);
          return newDay;
      }
 
-     function setPhaseImage(imageId, phase) {
-         document.getElementById(imageId).src = imageForPhase(phase);
+     function setupImage(imageId, phase, when) {   
+         var elem = document.getElementById(imageId);
+	 elem.src = imageForPhase(phase);
+	 elem.alt = altForPhase(phase);
      }
 
      const today = new Date();
@@ -188,9 +213,9 @@
      const yesterdayPhase = getMoonPhase(dateShiftedByDays(today, -1));
      const tomorrowPhase = getMoonPhase(dateShiftedByDays(today, 1));
 
-     setPhaseImage('today-img', todayPhase);
-     setPhaseImage('yesterday-img', yesterdayPhase);
-     setPhaseImage('tomorrow-img', tomorrowPhase)
+     setupImage('today-img', todayPhase);
+     setupImage('yesterday-img', yesterdayPhase);
+     setupImage('tomorrow-img', tomorrowPhase)
 
      const message = isUposatha(yesterdayPhase, todayPhase) ? "Is Uposatha. Be mindful" : "Not Uposatha. Still be mindful";
      document.getElementById('msg').innerHTML = message;
