@@ -5,6 +5,7 @@
 
 html, body {
     background-color: white;
+    font-family: sans-serif;
 }
 
 .img {
@@ -14,6 +15,44 @@ html, body {
     margin: 0 auto;
     -webkit-animation: mover 2s ease-in-out 0s infinite alternate;
     animation: mover 2s ease-in-out 0s infinite alternate;
+}
+
+#footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: #666;
+    height: 70px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+#footer * {
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  line-height: 44px;
+}
+
+a:link, a:visited {
+  color: #666;
+}
+
+button {
+     background:none!important;
+     color:inherit;
+     border:none;
+     padding:0!important;
+     font: inherit;
+     cursor: pointer;
+     margin-left: 20px;
+     height: 44px;
 }
 
 @-webkit-keyframes mover {

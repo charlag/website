@@ -7,5 +7,43 @@
     </head>
     <body role="main">
         <img src="buddha.jpeg" class="img" alt="Floating pixel Buddha"/>
+        <div id="footer">
+          <audio controls>
+            <source src="crystal_bowls.ogg"></source>
+          </audio>
+          <div style="flex: 1;"></div>
+          <a id="about-audio" href="https://archive.org/details/CrystalSingingBowlConcert">
+            About audio
+          </a>
+        </div>
+
+        <script>
+        document.body.onload = () => {
+          const footer = document.getElementById("footer")
+          const hideButton = document.createElement("button")
+          const audio = document.querySelector("audio")
+          const link = document.getElementById("about-audio")
+
+          const updateForVisiblity = (visible) => {
+            if (visible) {
+                  audio.style.display = ""
+                  link.style.display = ""
+                  hideButton.innerHTML = "Hide"
+            } else {
+                  audio.style.display = "none"
+                  link.style.display = "none"
+                  hideButton.innerHTML = "Show"
+            }
+          }
+
+          updateForVisiblity(true)
+          let visible = true
+          hideButton.onclick = () => {
+            visible = !visible
+            updateForVisiblity(visible)
+          }
+          footer.appendChild(hideButton)
+        }
+        </script>
     </body>
 </html>
