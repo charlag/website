@@ -1,0 +1,12 @@
+---
+title: Archive
+---
+
+<ul class="archive-list">
+{% for post in collections.posts.pages %}
+    <li class="posted-at">
+        {{ post.published_date | date: "%F"}}
+        <a href="{{"/" | append: post.permalink}}">{{post.title}}</a>
+    </li> 
+{% endfor %}
+</ul>

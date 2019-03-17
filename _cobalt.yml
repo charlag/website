@@ -1,0 +1,14 @@
+
+site:
+  title: charlag space
+  description: charlag space
+  base_url: "https://charlag.space"
+pages:
+  default:
+    layout: default.liquid
+    permalink: /{{parent}}/{{name}}
+posts:
+  default:
+    layout: posts.liquid
+    permalink: /{{parent}}/{{name}}
+  rss: rss.xml

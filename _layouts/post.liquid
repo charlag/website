@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{{ page.title }}</title>
+        <link rel="stylesheet" href="/index.css" media="screen" title="no title" charset="utf-8">
+        <style>
+        </style>
+    </head>
+    <body>
+        <div class="main-container">
+            <h1>{{ page.title }}</h1>
+            <div class="posted-at posted-at-blog">{{ page.published_date | date: "%F %R" }}</div>
+            {{ page.content }}
+            {% include "footer.liquid" %}
+        </div>
+    </body>
+</html>
