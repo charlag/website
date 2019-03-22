@@ -36,7 +36,7 @@ a {
 
 .main-container {
     margin: 0 auto;
-    padding: 40px 0;
+    padding: 40px;
     max-width: 800px;
     display: flex;
     flex-direction: column;
@@ -47,20 +47,14 @@ a {
     flex: 1;
 }
 
-@media(max-width: 680px) {
-    .main-container {
-        margin: 40px !important;
-    }
-}
 
 .photo {
     border-radius: 50%;
     width: 150px;
     height: 150px;
     display: block;
-    margin: 0 auto;
     border: 4px solid #FFF;
-    margin-bottom: 15px;
+    margin: 15px auto;
 }
 
 p {
